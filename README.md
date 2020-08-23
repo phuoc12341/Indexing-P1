@@ -11,6 +11,7 @@ Ok giờ mình sẽ setup:
 
 Mình sẽ setup như sau: Ở đây các bạn chú ý chúng ta sẽ đánh index cho trường email - kiểu index là unique()
 
+```
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -46,15 +47,19 @@ class CreateTestsTable extends Migration
         Schema::dropIfExists('tests');
     }
 }
+```
 
 Sau đó ta đã tạo xong bảng này, chúng ta chạy lệnh: php artisan migrate 
 
 Giờ dến việc khó nhằn đây, giờ chúng ta phải seed ra 1 triệu bản ghi trong table này. Không sao mình đã có cách :D cái máy laptop cùi bắp của mình seed tầm 4'30s là được máy các bạn ngon thì sẽ nhanh hơn. Các bạn tạo 1 file Seeder làm như sau: 
 
+```
 php artisan make:seeder TestSeeder
+```
 
 Trong này các bạn sẽ tạo 1 triệu bản ghi như sau:
 
+```
 <?php
 
 use App\Models\Test;
@@ -109,7 +114,7 @@ class TestSeeder extends Seeder
         }
     }
 }
-
+```
 
 Giải thích đoạn code trên 1 chút: Mình sẽ chia thành 100 batch mỗi batch insert 10000 bản ghi như vậy là được 1 triệu bản ghi. Các bạn chú ý lini_set('memory_limit', '-1'); nếu không Mysql sẽ báo lỗi do cạn kiệt bộ nhớ vì mình seed quá nhiều dữ liệu nha. Mình viết trực tiếp thế này cho nhanh, nếu không thích các bạn vào sửa file mysql.cnf của mysql cũng được. Nhớ set nó memory_limit=-1 để ko có giới hạn bộ nhớ khi chúng ta insert nha
 
@@ -122,10 +127,13 @@ Sau khi seed xong. Giờ chúng ta sẽ tạo Controller và Model để test nh
 
 Các bạn tạo controller + model như sau: 
 
+```
 php artisan make:controller TestController --resource --model=Test
+```
 
 Trong hàm TestController chúng ta viết hàm index() đơn giản ngắn gọn như sau:
 
+```
 <?php
 
 namespace App\Http\Controllers;
@@ -154,6 +162,7 @@ class TestController extends Controller
     }
 
 }
+```
 
 Giải thích: email "vickie22@hintz.org" các bạn lấy 1 email bất kì sau khi seed xong trong bảng test nhé
 
@@ -161,9 +170,14 @@ Giải thích: email "vickie22@hintz.org" các bạn lấy 1 email bất kì sau
 
 Tí quên các bạn vào trong file route/web.php: đình nghĩa 1 cái route mình dùng tạm để test như sau
 
+```
 Route::get('/tests', 'TestController@index');
+```
 
-Sau đó mình lên trình duyệt gõ: http://127.0.0.1/tests
+Sau đó mình lên trình duyệt gõ: 
+```
+http://127.0.0.1/tests
+```
 
 Rồi ngắm kết quả trong DebugBar nhé, ở đầy mình ko upload ảnh được các bạn thông cảm =)))
 
